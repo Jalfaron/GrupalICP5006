@@ -9,6 +9,11 @@ Este proyecto realiza un análisis transversal de los resultados electorales en 
 # Objetivo
 El objetivo es investigar la distribución de género por partido político con respecto a la proporción de género de sus afiliadas y afiliados. 
 
+# Marco teórico
+_Desde 2017, las candidaturas parlamentarias han estado reguladas por una cuota de género, que impide que ningún género supere el 60% de participación en la inscripción total de postulaciones al Congreso Nacional. Esta medida, establecida para las elecciones de 2017, 2021, 2025 y 2029, ha asegurado que al menos un 40% de las listas esté compuesto por mujeres.
+
+Sin embargo, la ley de cuotas no garantiza escaños, solo postulaciones. La distribución de los cupos, la competitividad dentro de los partidos y la cultura política siguen siendo factores que influyen en el acceso de las mujeres al poder legislativo_. Nodo Electoral, 2025.
+
 # Fuentes de Datos
 Para el desarrollo de este proyecto se priorizarás las siguientes fuentes de información:
 1. Cantidad de militantes de cada partido político:
