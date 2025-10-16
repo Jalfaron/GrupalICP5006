@@ -29,7 +29,7 @@ El proyecto estará dividido en tres etapas que estarán contenidas:
      
   2. Análisis y modelamiento de los datos: _En esta etapa se realiza el análisis transversal de patrones electorales en función del género de las candidaturas y de las personas afiliadas. Aquí se extraen estadísticas descriptivas y se identifican relaciones relevantes entre las variables._
      
-  3. Visualización y comunicación de resultados: _En esta fase se presentan los resultados del análisis mediante gráficos, mapas y dashboards que faciliten la interpretación de tendencias y comparaciones entre partidos políticos._
+  3. Visualización y comunicación de resultados: _En esta fase se presentan los resultados finales del análisis mediante gráficos, mapas y dashboards que faciliten la interpretación de tendencias y comparaciones entre partidos políticos._
 
 Este proyecto es realizado en el marco del curso ICP5006 "Medición y análisis dimensional de datos políticos".
 
