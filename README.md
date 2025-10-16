@@ -1,10 +1,10 @@
-# GrupalICP5006
+oc# GrupalICP5006
 # Paridad de género en las elecciones parlamentarias
 
 _Grupo: Javiera Alfaro, Bernardino Araya, Osvaldo Malfanti, Sara Vidal_
 
 # Introducción al tema de nuestro proyecto: PARIDAD
-Este proyecto realiza un análisis transversal de los resultados electorales en Chile en las elecciones Parlamentarias del 2021.
+Este proyecto realiza un análisis transversal de los resultados electorales en Chile en las elecciones Parlamentarias del 2021, enfocándose en las diferencias de género de las candidaturas y de las afiliaciones al partido político.
 
 # Objetivo
 El objetivo es investigar la distribución de género por partido político con respecto a la proporción de género de sus afiliadas y afiliados. 
