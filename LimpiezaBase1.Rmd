@@ -8,8 +8,9 @@ output: html_document
 # Limpieza de base de datos diputados y diputadas
 
 
-```{r cars}
-summary(cars)
+```{r}
+library(dplyr)
+library(readxl)
 ```
 
 
