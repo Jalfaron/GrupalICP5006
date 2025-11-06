@@ -75,8 +75,8 @@ Tasa de éxito por género (candidatas electas / candidatas totales).
 
 ## 4. Análisis Comparativo y Modelamiento
 _a. Indicadores Clave_
-Índice de paridad por partido: Paridad=Candidatas mujeresTotal de candidaturas\text{Paridad} = \frac{\text{Candidatas mujeres}}{\text{Total de candidaturas}}Paridad=Total de candidaturasCandidatas mujeres​
-Índice de representación efectiva: Representacioˊn=Electas mujeresTotal electos\text{Representación} = \frac{\text{Electas mujeres}}{\text{Total electos}}Representacioˊn=Total electosElectas mujeres​
+Índice de paridad por partido: Paridad = Candidatas mujeres/Total de candidaturas
+Índice de representación efectiva: Representación = Electas mujeres/Total electos
 
 _b. Modelos Estadísticos (opcional)_
 Regresiones logísticas para ver si el género influye en la probabilidad de ser electo/a.
