@@ -73,7 +73,7 @@ _c. Resultados Electorales_
 Por género y partido.
 Tasa de éxito por género (candidatas electas / candidatas totales).
 
-# 4. Análisis Comparativo y Modelamiento
+## 4. Análisis Comparativo y Modelamiento
 _a. Indicadores Clave_
 Índice de paridad por partido: Paridad=Candidatas mujeresTotal de candidaturas\text{Paridad} = \frac{\text{Candidatas mujeres}}{\text{Total de candidaturas}}Paridad=Total de candidaturasCandidatas mujeres​
 Índice de representación efectiva: Representacioˊn=Electas mujeresTotal electos\text{Representación} = \frac{\text{Electas mujeres}}{\text{Total electos}}Representacioˊn=Total electosElectas mujeres​
@@ -82,17 +82,17 @@ _b. Modelos Estadísticos (opcional)_
 Regresiones logísticas para ver si el género influye en la probabilidad de ser electo/a.
 Análisis de correlación entre proporción de militantes mujeres y candidatas mujeres.
 
-# 5. Visualización de Resultados
+## 5. Visualización de Resultados
 Gráficos de barras comparativos por partido.
 Mapas de calor por región.
 Dashboards interactivos (si usas Shiny en R, por ejemplo).
 
-# 6. Conclusiones y Recomendaciones
+## 6. Conclusiones y Recomendaciones
 ¿Qué partidos tienen mayor coherencia entre militancia y candidaturas?
 ¿La cuota de género está logrando su objetivo?
 ¿Qué barreras persisten para la representación femenina?
 
-# 7. Proyecciones
+## 7. Proyecciones
 Comparar con elecciones de 2017 y proyectar hacia 2025.
 Incluir variables como edad, región o trayectoria política.
 
