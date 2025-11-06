@@ -36,17 +36,15 @@ El proyecto estará dividido en tres etapas que estarán contenidas:
      
   3. Visualización y comunicación de resultados: _En esta fase se presentan los resultados finales del análisis mediante gráficos, mapas y dashboards que faciliten la interpretación de tendencias y comparaciones entre partidos políticos._
 
-Este proyecto es realizado en el marco del curso ICP5006 "Medición y análisis dimensional de datos políticos".
 
-
-#🧭 Plan de Análisis 
-##1. Definición del Problema y Preguntas de Investigación
+# Plan de Análisis 
+## 1. Definición del Problema y Preguntas de Investigación
 ¿Existe coherencia entre la proporción de militantes mujeres en los partidos y la proporción de candidatas presentadas?
 ¿Qué partidos presentan mayor o menor paridad en sus candidaturas?
 ¿La cuota de género ha tenido impacto en los resultados electorales (es decir, en la cantidad de mujeres electas)?
 ¿Hay diferencias entre elecciones de diputados y senadores en cuanto a paridad?
 
-##2. Preparación de Datos
+## 2. Preparación de Datos
 _a. Fuentes_
 SERVEL: Militancia por sexo, edad, región.
 SERVEL: Resultados electorales y candidaturas oficiales por género y partido.
@@ -61,7 +59,7 @@ Variable independiente: Género de las personas militantes de los partidos polí
 Variable dependiente: Género de candidatas y candidatos en las listas electorales de los partidos políticos (mujer, hombre, no binario)
 Variables de control: Partido político al que pertenecen candidatos y militantes, nivel al que se postulan (senadores, diputados) y año o período electoral
 
-##3. Análisis Descriptivo
+## 3. Análisis Descriptivo
 _a. Distribución de Militancia_
 Por partido político.
 Por género.
@@ -75,7 +73,7 @@ _c. Resultados Electorales_
 Por género y partido.
 Tasa de éxito por género (candidatas electas / candidatas totales).
 
-#4. Análisis Comparativo y Modelamiento
+# 4. Análisis Comparativo y Modelamiento
 _a. Indicadores Clave_
 Índice de paridad por partido: Paridad=Candidatas mujeresTotal de candidaturas\text{Paridad} = \frac{\text{Candidatas mujeres}}{\text{Total de candidaturas}}Paridad=Total de candidaturasCandidatas mujeres​
 Índice de representación efectiva: Representacioˊn=Electas mujeresTotal electos\text{Representación} = \frac{\text{Electas mujeres}}{\text{Total electos}}Representacioˊn=Total electosElectas mujeres​
@@ -84,18 +82,19 @@ _b. Modelos Estadísticos (opcional)_
 Regresiones logísticas para ver si el género influye en la probabilidad de ser electo/a.
 Análisis de correlación entre proporción de militantes mujeres y candidatas mujeres.
 
-#5. Visualización de Resultados
+# 5. Visualización de Resultados
 Gráficos de barras comparativos por partido.
 Mapas de calor por región.
 Dashboards interactivos (si usas Shiny en R, por ejemplo).
 
-#6. Conclusiones y Recomendaciones
+# 6. Conclusiones y Recomendaciones
 ¿Qué partidos tienen mayor coherencia entre militancia y candidaturas?
 ¿La cuota de género está logrando su objetivo?
 ¿Qué barreras persisten para la representación femenina?
 
-#7. Proyecciones
+# 7. Proyecciones
 Comparar con elecciones de 2017 y proyectar hacia 2025.
 Incluir variables como edad, región o trayectoria política.
 
 
+_Este proyecto es realizado en el marco del curso ICP5006 "Medición y análisis dimensional de datos políticos"._
