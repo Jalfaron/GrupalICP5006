@@ -78,14 +78,14 @@ _a. Indicadores Clave_
 Índice de paridad por partido: Paridad = Candidatas mujeres/Total de candidaturas
 Índice de representación efectiva: Representación = Electas mujeres/Total electos
 
-_b. Modelos Estadísticos (opcional)_
+_b. Modelos Estadísticos_
 Regresiones logísticas para ver si el género influye en la probabilidad de ser electo/a.
 Análisis de correlación entre proporción de militantes mujeres y candidatas mujeres.
 
 ## 5. Visualización de Resultados
 Gráficos de barras comparativos por partido.
 Mapas de calor por región.
-Dashboards interactivos (si usas Shiny en R, por ejemplo).
+Dashboards interactivos.
 
 ## 6. Conclusiones y Recomendaciones
 ¿Qué partidos tienen mayor coherencia entre militancia y candidaturas?
