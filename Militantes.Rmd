@@ -1,0 +1,65 @@
+---
+title: "Militantes"
+author: "Bernardino Araya"
+date: "2025-11-25"
+output: html_document
+---
+
+# Paquetes de Library
+
+```{r}
+library(tidyverse)
+library(readxl)
+```
+
+
+
+# Militantes de partidos por sexo a nivel nacional en noviembre de 2021 (mes de la elección) 
+
+```{r}
+
+# 1. Cargar la hoja '2021'
+# Asegúrate de que el archivo esté en tu carpeta de proyecto o usa la ruta correcta
+datos_raw <- read_excel("Bases de datos/Estadistica por Rango Etario (2021 y 2025).xlsx", 
+                        sheet = "2021", 
+                        skip = 1)
+
+# 2. Procesar, Renombrar y FILTRAR
+datos_2021_noviembre <- datos_raw %>%
+  # Renombrado estándar que pediste
+  rename(
+    partido = PARTIDO,
+    region = REGION,
+    comuna = COMUNA,
+    mes = MES,
+    sexo = SEXO,
+    re0_19 = `0-19`,
+    re20_24 = `20-24`,
+    re25_29 = `25-29`,
+    re30_34 = `30-34`,
+    re35_39 = `35-39`,
+    re40_44 = `40-44`,
+    re45_49 = `45-49`,
+    re50_54 = `50-54`,
+    re55_59 = `55-59`,
+    re60_64 = `60-64`,
+    re65_69 = `65-69`,
+    re70_74 = `70-74`,
+    re75_79 = `75-79`,
+    re80    = `80+`,
+    total_mes_zona = TOTAL
+  ) %>%
+  # --- AQUÍ ESTÁ EL CAMBIO IMPORTANTE ---
+  # Nos quedamos solo con los datos del mes 11
+  filter(mes == 11)
+
+# 3. Crear la tabla resumen final
+tabla_grafico <- datos_2021_noviembre %>%
+  group_by(partido, sexo) %>%
+  summarise(total_militantes = sum(total_mes_zona, na.rm = TRUE)) %>%
+  ungroup()
+
+# 4. Ver el resultado y verificar que los números tengan sentido
+print(head(tabla_grafico))
+
+```
