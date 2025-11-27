@@ -1,0 +1,218 @@
+---
+title: "Untitled"
+author: "Bernardino Araya"
+date: "2025-11-27"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(writexl)
+library(scales)
+```
+
+```{r}
+library(tidyverse)
+
+# ==============================================================================
+# PASO 0: LIMPIEZA CENTRALIZADA DE NOMBRES
+# ==============================================================================
+# Definimos una función que aplica TODOS tus cambios de una sola vez.
+# Esto hace que el código sea más corto y menos propenso a errores.
+
+limpiar_nombres <- function(data) {
+  data %>%
+    mutate(
+      # 1. Quitar el prefijo "INDEPENDIENTE " (con espacio) si existe
+      partido = str_remove(partido, "^INDEPENDIENTE "),
+      
+      # 2. Aplicar todas tus reglas de cambio de nombre
+      partido = case_match(partido,
+        "UNION DEMOCRATA INDEPENDIENTE" ~ "UDI",
+        "PARTIDO COMUNISTA DE CHILE"    ~ "COMUNISTA DE CHILE",
+        "FEDERACION REGIONALISTA VERDE SOCIALISTA" ~ "FEDERACION REGIONALISTA VERDE SOCIAL",
+        "PARTIDO ECOLOGISTA VERDE"      ~ "ECOLOGISTA VERDE",
+        "PARTIDO HUMANISTA"             ~ "HUMANISTA",
+        "PARTIDO UNION PATRIOTICA"      ~ "UNION PATRIOTICA",
+        "PARTIDO REGIONALISTA INDEPENDIENTE DEMOCRATA" ~ "REGIONALISTA INDEPENDIENTE DEMOCRATA",
+        
+        # .default = partido significa: "Si no está en la lista de arriba, déjalo igual"
+        .default = partido 
+      )
+    )
+}
+
+# Aplicamos la limpieza a las 3 bases
+tabla_grafico       <- limpiar_nombres(tabla_grafico)
+candidatos_senador  <- limpiar_nombres(candidatos_senador)
+candidatos_diputado <- limpiar_nombres(candidatos_diputado)
+
+# ==============================================================================
+# 1. Proporción de MUJERES MILITANTES por Partido
+# ==============================================================================
+prop_militantes <- tabla_grafico %>%
+  group_by(partido) %>%
+  summarise(
+    total_gral = sum(total_militantes, na.rm = TRUE),
+    total_mujeres = sum(total_militantes[sexo == "M"], na.rm = TRUE),
+    prop_militantes_mujeres = total_mujeres / total_gral
+  ) %>%
+  select(partido, prop_militantes_mujeres)
+
+# ==============================================================================
+# 2. Proporción de MUJERES CANDIDATAS (Senadores y Diputados)
+# ==============================================================================
+
+# --- Senadores ---
+prop_cand_senadores <- candidatos_senador %>%
+  group_by(partido) %>%
+  summarise(
+    total_candidatos = n(),
+    total_mujeres = sum(sexo == "MUJER", na.rm = TRUE),
+    prop_candidatas_sen = total_mujeres / total_candidatos
+  ) %>%
+  select(partido, prop_candidatas_sen)
+
+# --- Diputados ---
+prop_cand_diputados <- candidatos_diputado %>%
+  group_by(partido) %>%
+  summarise(
+    total_candidatos = n(),
+    total_mujeres = sum(sexo == "MUJER", na.rm = TRUE),
+    prop_candidatas_dip = total_mujeres / total_candidatos
+  ) %>%
+  select(partido, prop_candidatas_dip)
+
+# ==============================================================================
+# 3. Proporción de MUJERES ELECTAS (Senadores y Diputados)
+# ==============================================================================
+
+# --- Senadores Electos ---
+prop_electas_senadores <- candidatos_senador %>%
+  filter(!is.na(cargo)) %>%  # Solo los que ganaron
+  group_by(partido) %>%
+  summarise(
+    total_electos = n(),
+    total_mujeres_electas = sum(sexo == "MUJER", na.rm = TRUE),
+    prop_electas_sen = total_mujeres_electas / total_electos
+  ) %>%
+  select(partido, prop_electas_sen)
+
+# --- Diputados Electos ---
+prop_electas_diputados <- candidatos_diputado %>%
+  filter(!is.na(cargo)) %>%  # Solo los que ganaron
+  group_by(partido) %>%
+  summarise(
+    total_electos = n(),
+    total_mujeres_electas = sum(sexo == "MUJER", na.rm = TRUE),
+    prop_electas_dip = total_mujeres_electas / total_electos
+  ) %>%
+  select(partido, prop_electas_dip)
+
+# ==============================================================================
+# 4. Tabla Maestra Unificada y FILTRADA
+# ==============================================================================
+
+resumen_genero <- prop_militantes %>%
+  full_join(prop_cand_senadores, by = "partido") %>%
+  full_join(prop_cand_diputados, by = "partido") %>%
+  full_join(prop_electas_senadores, by = "partido") %>%
+  full_join(prop_electas_diputados, by = "partido") %>%
+  
+  # --- AQUÍ ESTÁ EL FILTRO FINAL QUE PEDISTE ---
+  filter(
+    partido != "INDEPENDIENTE",  # Elimina la fila literal "INDEPENDIENTE"
+    !is.na(partido)              # Elimina los N/A
+  )
+
+# Ver el resultado final limpio
+print(head(resumen_genero))
+```
+
+
+```{r}
+# Esto guardará el archivo en la carpeta principal de tu proyecto
+write_xlsx(resumen_genero, "Base_Final_Genero_Partidos.xlsx")
+```
+
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(scales) # Para formatear los ejes como porcentajes (0% - 100%)
+
+# 1. Cargar la base de datos final
+datos_grafico <- read_excel("Base_Final_Genero_Partidos.xlsx")
+
+# ==============================================================================
+# FUNCIÓN MAESTRA DE GRAFICADO
+# ==============================================================================
+# Creamos una función para no repetir el mismo código 5 veces.
+# Solo le damos el nombre de la columna y el título, y ella hace el resto.
+
+crear_grafico <- function(data, variable, titulo, color_barra) {
+  
+  # Filtramos NAs para que el gráfico salga limpio
+  data_clean <- data %>% 
+    filter(!is.na({{variable}}))
+  
+  ggplot(data_clean, aes(x = reorder(partido, {{variable}}), y = {{variable}})) +
+    
+    # Dibujar Barras
+    geom_col(fill = color_barra, alpha = 0.8, width = 0.7) +
+    
+    # Etiquetas de texto sobre las barras (ej: "45.2%")
+    geom_text(aes(label = percent({{variable}}, accuracy = 0.1)), 
+              hjust = -0.1, size = 3, fontface = "bold") +
+    
+    # Girar gráfico (Barras horizontales)
+    coord_flip() +
+    
+    # Formato del eje Y (que ahora está abajo) como porcentaje
+    scale_y_continuous(labels = percent_format(), limits = c(0, 1.15)) + # 1.15 da espacio para la etiqueta
+    
+    # Títulos y Estilo
+    labs(
+      title = titulo,
+      x = "", # Quitamos etiqueta "partido" porque es obvia
+      y = "Proporción de Mujeres"
+    ) +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(face = "bold", size = 14),
+      axis.text.y = element_text(size = 10) # Tamaño nombres partidos
+    )
+}
+
+# ==============================================================================
+# GENERANDO LOS 5 GRÁFICOS
+# ==============================================================================
+
+# 1. Mujeres Militantes (Color: Morado)
+p1 <- crear_grafico(datos_grafico, prop_militantes_mujeres, 
+                    "Ranking: % Mujeres Militantes por Partido", "#884EA0")
+print(p1)
+
+# 2. Candidatas a Senadoras (Color: Azul Oscuro)
+p2 <- crear_grafico(datos_grafico, prop_candidatas_sen, 
+                    "Ranking: % Candidatas a Senadoras", "#2471A3")
+print(p2)
+
+# 3. Candidatas a Diputadas (Color: Azul Claro)
+p3 <- crear_grafico(datos_grafico, prop_candidatas_dip, 
+                    "Ranking: % Candidatas a Diputadas", "#5DADE2")
+print(p3)
+
+# 4. Senadoras Electas (Color: Verde Oscuro)
+p4 <- crear_grafico(datos_grafico, prop_electas_sen, 
+                    "Ranking: % Senadoras ELECTAS", "#196F3D")
+print(p4)
+
+# 5. Diputadas Electas (Color: Verde Claro)
+p5 <- crear_grafico(datos_grafico, prop_electas_dip, 
+                    "Ranking: % Diputadas ELECTAS", "#52BE80")
+print(p5)
+```
+
+
