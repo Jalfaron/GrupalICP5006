@@ -6,7 +6,6 @@ output: html_document
 ---
 
 
-
 # *Paquetes de Library*
 
 ```{r}
@@ -139,4 +138,5 @@ print(sum(is.na(candidatos_senador$sexo)))
 
 print("Diputados sin match de sexo:")
 print(sum(is.na(candidatos_diputado$sexo)))
+
 ```

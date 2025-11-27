@@ -82,3 +82,10 @@ diputados <- bd_dip_excel |> select(region,
                                     cargo
                                     )
 ```
+
+```{r}
+candidatos_diputado <- candidatos_diputado %>%
+  mutate(partido = str_remove(partido, "^INDEPENDIENTE "))
+```
+
+

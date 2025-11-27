@@ -54,7 +54,7 @@ bd_sen_excel <- bd_sen_excel |> select(region,
                                        lista, 
                                        pacto,
                                        partido, 
-                                       nro_voto, 
+                                       nro_voto,
                                        nombres,
                                        primer_apellido, 
                                        segundo_apellido, 
@@ -91,3 +91,9 @@ senadores <- bd_sen_excel |> select(region,
                                     cargo
                                     )
 ```
+
+```{r}
+
+```
+
+
