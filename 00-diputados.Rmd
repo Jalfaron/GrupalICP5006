@@ -3,13 +3,14 @@ title: "Diputados"
 author: "Bernardino Araya"
 date: "2025-11-06"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r}
 library(tidyverse)
 library(writexl)
 library(readxl)
-library(dplyr)
 ```
 
 ```{r}
@@ -66,7 +67,8 @@ bd_dip_excel <- bd_dip_excel |>  group_by(region,
                                           circ_sen, 
                                           distrito
                                           ) |>
-  summarise(total_region = sum(votos, na.rm = TRUE))
+  summarise(total_region = sum(votos, na.rm = TRUE)) |> 
+  filter(!is.na(partido))
 ```
 
 ```{r}
@@ -83,9 +85,9 @@ diputados <- bd_dip_excel |> select(region,
                                     )
 ```
 
-```{r}
-candidatos_diputado <- candidatos_diputado %>%
-  mutate(partido = str_remove(partido, "^INDEPENDIENTE "))
-```
+Guardar base de dato:
 
+```{r}
+write_rds(diputados, "output/base_diputados.rds")
+```
 

@@ -3,6 +3,8 @@ title: "Untitled"
 author: "Bernardino Araya"
 date: "2025-11-27"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r}
@@ -12,8 +14,18 @@ library(writexl)
 library(scales)
 ```
 
+Abrimos las bases de datos:
+
 ```{r}
-library(tidyverse)
+candidatos_senador <- read_rds("output/candidatos_senador_sexo.rds")
+
+candidatos_diputado <- read_rds("output/candidatos_diputados_sexo.rds")
+
+tabla_grafico <- read_rds("output/tabla_grafico.rds")
+```
+
+
+```{r}
 
 # ==============================================================================
 # PASO 0: LIMPIEZA CENTRALIZADA DE NOMBRES
@@ -36,6 +48,13 @@ limpiar_nombres <- function(data) {
         "PARTIDO HUMANISTA"             ~ "HUMANISTA",
         "PARTIDO UNION PATRIOTICA"      ~ "UNION PATRIOTICA",
         "PARTIDO REGIONALISTA INDEPENDIENTE DEMOCRATA" ~ "REGIONALISTA INDEPENDIENTE DEMOCRATA",
+        "PARTIDO DE LA GENTE" ~ "DE LA GENTE",
+        "PARTIDO LIBERAL DE CHILE" ~ "LIBERAL DE CHILE",
+        "PARTIDO DEMOCRATA CRISTIANO" ~ "DEMOCRATA CRISTIANO",
+        "PARTIDO SOCIALISTA DE CHILE" ~ "SOCIALISTA DE CHILE",
+        "PARTIDO REPUBLICANO DE CHILE" ~ "REPUBLICANO DE CHILE",
+        "PARTIDO RADICAL DE CHILE" ~ "RADICAL DE CHILE",
+        "PARTIDO POR LA DEMOCRACIA" ~ "POR LA DEMOCRACIA",
         
         # .default = partido significa: "Si no está en la lista de arriba, déjalo igual"
         .default = partido 
@@ -133,17 +152,14 @@ print(head(resumen_genero))
 
 ```{r}
 # Esto guardará el archivo en la carpeta principal de tu proyecto
-write_xlsx(resumen_genero, "Base_Final_Genero_Partidos.xlsx")
+write_xlsx(resumen_genero, "output/Base_Final_Genero_Partidos.xlsx")
 ```
 
 
 ```{r}
-library(tidyverse)
-library(readxl)
-library(scales) # Para formatear los ejes como porcentajes (0% - 100%)
 
 # 1. Cargar la base de datos final
-datos_grafico <- read_excel("Base_Final_Genero_Partidos.xlsx")
+datos_grafico <- read_excel("output/Base_Final_Genero_Partidos.xlsx")
 
 # ==============================================================================
 # FUNCIÓN MAESTRA DE GRAFICADO
@@ -170,7 +186,7 @@ crear_grafico <- function(data, variable, titulo, color_barra) {
     coord_flip() +
     
     # Formato del eje Y (que ahora está abajo) como porcentaje
-    scale_y_continuous(labels = percent_format(), limits = c(0, 1.15)) + # 1.15 da espacio para la etiqueta
+    scale_y_continuous(labels = percent_format(), limits = c(0, 1)) + # 1.15 da espacio para la etiqueta
     
     # Títulos y Estilo
     labs(
@@ -213,6 +229,37 @@ print(p4)
 p5 <- crear_grafico(datos_grafico, prop_electas_dip, 
                     "Ranking: % Diputadas ELECTAS", "#52BE80")
 print(p5)
+```
+
+Resumen género:
+
+```{r}
+gg_resumen <- resumen_genero |> 
+  filter(prop_electas_dip > 0.1) |> 
+  pivot_longer(cols = -1)
+
+gg_resumen <- gg_resumen |> 
+  mutate(name = as_factor(name),
+    name = fct_relevel(name, "prop_militantes_mujeres",
+                            "prop_candidatas_dip", "prop_electas_dip",
+                            "prop_candidatas_sen", "prop_electas_sen"))
+
+gg_resumen |> 
+  ggplot(aes(x = fct_reorder(partido, value), y = value, fill = name)) +
+  geom_col() +
+  geom_text(aes(label = 
+                  if_else(value > 0.1, paste0((round(value, 2)*100),"%"), "")),
+            hjust = -0.2, size = 3) +
+  scale_y_continuous(labels = percent) +
+  scale_fill_manual(values = c("#884EA0", "#5DADE2", "#52BE80", "#2471A3", "#196F3D")) +
+  facet_grid(cols = vars(name)) +
+  labs(x = NULL,
+       y = "Porcentaje (%)") +
+  coord_flip() +
+  theme_linedraw() +
+  theme(legend.position = "none",
+        panel.spacing = unit(1.3, "lines"))
+
 ```
 
 
