@@ -3,6 +3,8 @@ title: "Militantes"
 author: "Bernardino Araya"
 date: "2025-11-25"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Paquetes de Library
@@ -59,10 +61,8 @@ tabla_grafico <- datos_2021_noviembre %>%
   summarise(total_militantes = sum(total_mes_zona, na.rm = TRUE)) %>%
   ungroup()
 
-# 4. Ver el resultado y verificar que los números tengan sentido
-print(head(tabla_grafico))
 
---------------------------------------------------------------------------------
+
   
 # ==============================================================================
 # PASO 1: Diagnóstico - ¿Qué nombres son distintos?
@@ -70,6 +70,13 @@ print(head(tabla_grafico))
 
 # 1. Sacamos la lista única de partidos de la base de Candidatos (nuestra meta)
 # Unimos senadores y diputados para tener el universo completo de nombres "destino"
+
+candidatos_senador <- read_rds("output/candidatos_senador_sexo.rds")
+
+candidatos_diputado <- read_rds("output/candidatos_diputados_sexo.rds")
+
+
+
 meta_partidos <- unique(c(candidatos_senador$partido, candidatos_diputado$partido))
 
 # 2. Vemos qué partidos de la base Mix (Militantes) NO están en la meta
@@ -88,7 +95,6 @@ print(diferencias)
 tabla_grafico_fix <- tabla_grafico %>%
   mutate(partido = case_match(partido,
     # Formato: "NOMBRE EN MIX (Militantes)" ~ "NOMBRE EN CANDIDATOS (Boletín)"
-    
     "EVOPOLI" ~ "EVOLUCION POLITICA",  # Cambio muy común
     "PARTIDO COMUNISTA DE CHILE" ~ "COMUNISTA DE CHILE",
     "PARTIDO RADICAL DE CHILE"   ~ "RADICAL DE CHILE",
@@ -102,74 +108,7 @@ tabla_grafico_fix <- tabla_grafico %>%
     "PARTIDO HUMANISTA" ~ "HUMANISTA",
     "PARTIDO REGIONALISTA INDEPENDIENTE DEMOCRATA" ~ "REGIONALISTA INDEPENDIENTE DEMOCRATA",
     "REGIONALISTA VERDE SOCIALISTA" ~ "REGIONALISTA VERDE SOCIAL",
-    "UDI" ~ "UNION DEMOCRATA INDEPENDIENTE"
-    
-    # Mantenemos el resto igual si ya coinciden
-    .default = partido 
-  ))
-
-# ==============================================================================
-# PASO 3: Verificación Final
-# ==============================================================================
-# Volvemos a chequear si quedan huerfanos
-diferencias_nuevas <- setdiff(unique(tabla_grafico_fix$partido), meta_partidos)
-
-if(length(diferencias_nuevas) == 0) {
-  print("¡Éxito! Todos los partidos de Mix ahora coinciden con Candidatos.")
-} else {
-  print("Aún quedan estos partidos sin coincidencia (agrégalos al case_match):")
-  print(diferencias_nuevas)
-}
-
-# Sobrescribimos la tabla original si todo salió bien
-tabla_grafico <- tabla_grafico_fix  
-  
-
-
-```
-
-
-
-
-# ==============================================================================
-# PASO 1: Diagnóstico - ¿Qué nombres son distintos?
-# ==============================================================================
-
-# 1. Sacamos la lista única de partidos de la base de Candidatos (nuestra meta)
-# Unimos senadores y diputados para tener el universo completo de nombres "destino"
-meta_partidos <- unique(c(candidatos_senador$partido, candidatos_diputado$partido))
-
-# 2. Vemos qué partidos de la base Mix (Militantes) NO están en la meta
-# Esto nos dirá exactamente qué nombres debemos cambiar.
-diferencias <- setdiff(unique(tabla_grafico$partido), meta_partidos)
-
-print("Estos partidos de Mix NO coinciden con Candidatos y necesitan corrección:")
-print(diferencias)
-
-# ==============================================================================
-# PASO 2: Corrección Manual (El Diccionario)
-# ==============================================================================
-# A continuación he puesto los cambios más comunes en datos chilenos.
-# DEBES REVISAR LA LISTA 'diferencias' QUE IMPRIMISTE ARRIBA para ver si falta alguno.
-
-tabla_grafico_fix <- tabla_grafico %>%
-  mutate(partido = case_match(partido,
-    # Formato: "NOMBRE EN MIX (Militantes)" ~ "NOMBRE EN CANDIDATOS (Boletín)"
-    
-    "EVOPOLI" ~ "EVOLUCION POLITICA",  # Cambio muy común
-    "COMUNISTA DE CHILE" ~ "PARTIDO COMUNISTA DE CHILE",
-    "RADICAL DE CHILE"   ~ "PARTIDO RADICAL DE CHILE",
-    "DEMOCRATA CRISTIANO" ~ "PARTIDO DEMOCRATA CRISTIANO",
-    "DE LA GENTE"        ~ "PARTIDO DE LA GENTE",
-    "REPUBLICANO DE CHILE" ~ "PARTIDO REPUBLICANO DE CHILE",
-    "LIBERAL DE CHILE"   ~ "PARTIDO LIBERAL DE CHILE",
-    "SOCIALISTA DE CHILE" ~ "PARTIDO SOCIALISTA DE CHILE",
-    "POR LA DEMOCRACIA"  ~ "PARTIDO POR LA DEMOCRACIA",
-    "PARTIDO UNION PATRIOTICA" ~ "UNION PATRIOTICA",
-    "HUMANISTA" ~ "PARTIDO HUMANISTA",
-    "REGIONALISTA INDEPENDIENTE DEMOCRATA" ~ "PARTIDO REGIONALISTA INDEPENDIENTE DEMOCRATA"
-    
-    # Mantenemos el resto igual si ya coinciden
+    "UDI" ~ "UNION DEMOCRATA INDEPENDIENTE",
     .default = partido 
   ))
 
@@ -188,4 +127,12 @@ if(length(diferencias_nuevas) == 0) {
 
 # Sobrescribimos la tabla original si todo salió bien
 tabla_grafico <- tabla_grafico_fix
+  
+```
+
+Guardamos la base de datos:
+
+```{r}
+write_rds(tabla_grafico, "output/tabla_grafico.rds")
+```
 

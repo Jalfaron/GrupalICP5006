@@ -3,6 +3,8 @@ title: "Mix"
 author: "Bernardino Araya"
 date: "2025-11-25"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -12,8 +14,6 @@ output: html_document
 library(tidyverse)
 library(readxl)
 ```
-
-
 
 # *Dividir senadores y diputados*
 
@@ -74,9 +74,17 @@ print(names(s_dip))
 
 # *Mix*
 
+Cargamos las bases de datos que vienen de los R Markdown 00.
 
 ```{r}
-library(tidyverse)
+senadores <- read_rds("output/base_senadores.rds")
+
+diputados <- read_rds("output/base_diputados.rds")
+```
+
+
+
+```{r}
 
 # ==============================================================================
 # PASO 1: Estandarizar nombres en las bases del Boletín (s_sen y s_dip)
@@ -96,39 +104,25 @@ s_dip_ready <- s_dip %>%
 # PASO 2: Realizar el Cruce (Left Join)
 # ==============================================================================
 
+colnames(senadores)
+colnames(s_sen_ready)
+
 # --- SENADORES ---
 candidatos_senador <- senadores %>%
   # Unimos usando DOS llaves: que coincida la región Y el número de voto
-  left_join(s_sen_ready, by = c("region", "nro_voto")) %>%
-  select(
-    region,                  # Usamos la columna llave
-    circ_sen = circ_sen.x,   # Mantenemos datos originales
-    lista = lista.x,
-    pacto = pacto.x,
-    partido = partido.x,
-    nro_voto,                # Usamos la columna llave
-    candidato = candidato.x, # Mantenemos nombre original
-    sexo,                    # Columna nueva traída del boletín
-    total_region,
-    cargo
-  )
+  left_join(s_sen_ready, by = c("region", "nro_voto")) |> 
+  select(-ends_with(".y")) |> 
+  rename_with(~ str_remove(.x, "\\.x$"))
 
 # --- DIPUTADOS ---
-candidatos_diputado <- diputados %>%
-  left_join(s_dip_ready, by = c("region", "nro_voto")) %>%
-  select(
-    region,
-    distrito = distrito.x,
-    lista = lista.x,
-    pacto = pacto.x,
-    partido = partido.x,
-    nro_voto,
-    candidato = candidato.x,
-    sexo,                    # Columna nueva
-    total_region,
-    cargo
-  )
 
+colnames(diputados)
+colnames(s_dip_ready)
+
+candidatos_diputado <- diputados %>%
+  left_join(s_dip_ready, by = c("region", "distrito", "nro_voto")) |> 
+  select(-ends_with(".y")) |> 
+  rename_with(~ str_remove(.x, "\\.x$"))
 # ==============================================================================
 # PASO 3: Verificación de Integridad
 # ==============================================================================
@@ -140,3 +134,12 @@ print("Diputados sin match de sexo:")
 print(sum(is.na(candidatos_diputado$sexo)))
 
 ```
+
+Guardamos la base de datos:
+
+```{r}
+write_rds(candidatos_diputado, "output/candidatos_diputados_sexo.rds")
+
+write_rds(candidatos_senador, "output/candidatos_senador_sexo.rds")
+```
+
