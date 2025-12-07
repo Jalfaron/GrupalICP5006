@@ -126,9 +126,14 @@ _a. Indicadores Clave_
 Índice de representación efectiva: Representación = Electas mujeres / Cantidad candidatas
 
 ## 5. Visualización de Resultados
-Gráficos de barras comparativos por partido.
-Embudos visuales para revisar la proporción en distintas etapas.
-
+1. Proporción de militantes por partidos
+2. Candidatas a diputadas por partidos
+3. Candidatas a senadoras por partidos
+4. Cantidad de mujeres electas como diputadas por partidos
+5. Cantidad de mujeres electas como senadoras por partidos
+6. Embudo de Participación y Representación por Partido en Barras
+7. Embudo Promedio de Participación Femenina
+8. Embudo de Participación Femenina por Cámara
 
 ---
 
