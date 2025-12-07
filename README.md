@@ -127,18 +127,36 @@ _a. Indicadores Clave_
 
 ## 5. Visualización de Resultados
 1. Proporción de militantes por partidos
+<img width="1736" height="824" alt="Mujeres Militantes por Partido" src="https://github.com/user-attachments/assets/c237683c-f275-437b-8501-5411daeb6048" />
+
+
 2. Candidatas a diputadas por partidos
 
 <img width="1736" height="824" alt="Candidatas a Diputadas por partido" src="https://github.com/user-attachments/assets/66fb40d7-42ba-417d-b24f-554b95f14919" />
 
 3. Candidatas a senadoras por partidos
+<img width="1736" height="824" alt="Candidatas a Senadoras por partido" src="https://github.com/user-attachments/assets/a367983f-7f5e-4828-88e6-bbdf667f311e" />
+
+
 4. Cantidad de mujeres electas como diputadas por partidos
+<img width="1736" height="824" alt="Diputadas Electas por Partido" src="https://github.com/user-attachments/assets/cd164a6d-d243-44c2-8fc4-f380139e55e3" />
+
 5. Cantidad de mujeres electas como senadoras por partidos
+
+<img width="1736" height="824" alt="Senadoras Electas por Partido" src="https://github.com/user-attachments/assets/d3c6e9af-75e7-46e2-90f2-31dab7856efa" />
+
 6. Embudo de Participación y Representación por Partido en Barras
+
+<img width="1736" height="824" alt="Embudo de Participación y Representación por Partido en Barras" src="https://github.com/user-attachments/assets/2cc4d6b2-ce88-4db7-bfb6-7fcb43f41afc" />
+
 7. Embudo Promedio de Participación Femenina
+
+<img width="1736" height="824" alt="Embudo Promedio de Participación Femenina" src="https://github.com/user-attachments/assets/60c6b7f8-6b6d-46fa-b1ed-455e371ff77c" />
+
 8. Embudo de Participación Femenina por Cámara
 
-<img width="1736" height="824" alt="Embudo Promedio de Participación Femenina" src="https://github.com/user-attachments/assets/8618ea4e-8dbb-48a1-8e26-dcaf8c05d844" />
+<img width="1736" height="824" alt="Embudo de Participación Femenina por Cámara" src="https://github.com/user-attachments/assets/7bc0ccf1-b5d0-4289-8244-4436482ff831" />
+
 
 ---
 
