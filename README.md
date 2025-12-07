@@ -8,11 +8,18 @@ Este proyecto realiza un análisis transversal de los resultados electorales en 
 
 # Objetivo
 El objetivo es investigar la distribución de género por partido político con respecto a la proporción de género de sus afiliadas y afiliados. 
+Nuestra pregunta guía: ¿Cuál es la distribución de género en las elecciones parlamentarias de 2021 en relación a la proporción de género de las personas afiliadas en los partidos políticos?
 
 # Marco teórico
-_Desde 2017, las candidaturas parlamentarias han estado reguladas por una cuota de género, que impide que ningún género supere el 60% de participación en la inscripción total de postulaciones al Congreso Nacional. Esta medida, establecida para las elecciones de 2017, 2021, 2025 y 2029, ha asegurado que al menos un 40% de las listas esté compuesto por mujeres_
+Según Naciones Unidas (2025), con el nivel de avance actual, la paridad de género en los cuerpos legislativos nacionales no se logrará antes de 2063. Por lo tanto hay un desafío global relacionado a la partidad, ya que solo el 27,2% de los escaños parlamentarios nacionales están ocupados por mujeres. 
 
-_Sin embargo, la ley de cuotas no garantiza escaños, solo postulaciones. La distribución de los cupos, la competitividad dentro de los partidos y la cultura política siguen siendo factores que influyen en el acceso de las mujeres al poder legislativo_. Nodo Electoral, 2025.
+Desde 2017, las candidaturas parlamentarias han estado reguladas por una cuota de género, que impide que ningún género supere el 60% de participación en la inscripción total de postulaciones al Congreso Nacional. Esta medida, establecida para las elecciones de 2017, 2021, 2025 y 2029, ha asegurado que al menos un 40% de las listas esté compuesto por mujeres. Sin embargo, la ley de cuotas no garantiza escaños, solo postulaciones. La distribución de los cupos, la competitividad dentro de los partidos y la cultura política siguen siendo factores que influyen en el acceso de las mujeres al poder legislativo (Nodo Electoral, 2025). Con las elecciones parlamentarias de 2025 en el horizonte, la duda es si la representación femenina seguirá creciendo y si el aumento de candidatas se traducirá en más mujeres electas, consolidando una presencia equitativa en el Congreso.
+
+Tal como menciona Lefoulon (2025), Chile tuvo los órganos constituyentes más paritarios conocidos hasta el momento. Para la elección de la Cámara de 2017, sí encontraron brechas de género a favor de los hombres en todos los aportes, incluidos los aportes de partido.
+
+Además, según el Ministerio de la Mujer y la Equidad de Género en Chile (2025) hay motivos estructurales porque las mujeres se postulan menos que los hombres a las candidaturas, uno de ellos es la violencia que reciben por redes sociales y su participación requiere mayor apoyo de los partidos y compromiso a nivel país, como relevar la paridad.
+
+En consideración a estos antecedentes realizamos nuestro estudio.
 
 # Fuentes de Datos
 Para el desarrollo de este proyecto se priorizarás las siguientes fuentes de información:
@@ -75,12 +82,8 @@ Tasa de éxito por género (candidatas electas / candidatas totales).
 
 ## 4. Análisis Comparativo y Modelamiento
 _a. Indicadores Clave_
-Índice de paridad por partido: Paridad = Candidatas mujeres/Total de candidaturas
-Índice de representación efectiva: Representación = Electas mujeres/Total electos
-
-_b. Modelos Estadísticos_
-Regresiones logísticas para ver si el género influye en la probabilidad de ser electo/a.
-Análisis de correlación entre proporción de militantes mujeres y candidatas mujeres.
+Índice de paridad por partido: Paridad = Candidatas mujeres / Cantidad militantes
+Índice de representación efectiva: Representación = Electas mujeres / Cantidad candidatas
 
 ## 5. Visualización de Resultados
 Gráficos de barras comparativos por partido.
