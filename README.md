@@ -128,6 +128,9 @@ _a. Indicadores Clave_
 ## 5. Visualización de Resultados
 1. Proporción de militantes por partidos
 2. Candidatas a diputadas por partidos
+
+<img width="1736" height="824" alt="Candidatas a Diputadas por partido" src="https://github.com/user-attachments/assets/66fb40d7-42ba-417d-b24f-554b95f14919" />
+
 3. Candidatas a senadoras por partidos
 4. Cantidad de mujeres electas como diputadas por partidos
 5. Cantidad de mujeres electas como senadoras por partidos
