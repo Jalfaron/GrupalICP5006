@@ -135,6 +135,8 @@ _a. Indicadores Clave_
 7. Embudo Promedio de Participación Femenina
 8. Embudo de Participación Femenina por Cámara
 
+<img width="1736" height="824" alt="Embudo Promedio de Participación Femenina" src="https://github.com/user-attachments/assets/8618ea4e-8dbb-48a1-8e26-dcaf8c05d844" />
+
 ---
 
 # 6. Conclusiones
