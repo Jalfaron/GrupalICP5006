@@ -139,7 +139,6 @@ resumen_genero <- prop_militantes %>%
   full_join(prop_electas_senadores, by = "partido") %>%
   full_join(prop_electas_diputados, by = "partido") %>%
   
-  # --- AQUÍ ESTÁ EL FILTRO FINAL QUE PEDISTE ---
   filter(
     partido != "INDEPENDIENTE",  # Elimina la fila literal "INDEPENDIENTE"
     !is.na(partido)              # Elimina los N/A
@@ -151,7 +150,7 @@ print(head(resumen_genero))
 
 
 ```{r}
-# Esto guardará el archivo en la carpeta principal de tu proyecto
+# Guardando el archivo
 write_xlsx(resumen_genero, "output/Base_Final_Genero_Partidos.xlsx")
 ```
 
@@ -234,32 +233,229 @@ print(p5)
 Resumen género:
 
 ```{r}
-gg_resumen <- resumen_genero |> 
-  filter(prop_electas_dip > 0.1) |> 
-  pivot_longer(cols = -1)
+library(tidyverse)
+library(scales)
 
-gg_resumen <- gg_resumen |> 
-  mutate(name = as_factor(name),
-    name = fct_relevel(name, "prop_militantes_mujeres",
-                            "prop_candidatas_dip", "prop_electas_dip",
-                            "prop_candidatas_sen", "prop_electas_sen"))
+# 1) Preparando datos largos, reordenar etapas y filtrar opcionalmente
+gg_resumen <- resumen_genero %>%
+  pivot_longer(
+    cols = c(prop_militantes_mujeres, prop_candidatas_dip, prop_electas_dip,
+             prop_candidatas_sen, prop_electas_sen),
+    names_to = "etapa",
+    values_to = "valor"
+  ) %>%
+  mutate(
+    etapa = factor(etapa,
+      levels = c("prop_militantes_mujeres",
+                 "prop_candidatas_dip", "prop_electas_dip",
+                 "prop_candidatas_sen", "prop_electas_sen"),
+      labels = c("Militantes mujeres", "Candidatas Diputadas", "Diputadas Electas",
+                 "Candidatas Senadoras", "Senadoras Electas")
+    )
+  )
 
-gg_resumen |> 
-  ggplot(aes(x = fct_reorder(partido, value), y = value, fill = name)) +
-  geom_col() +
-  geom_text(aes(label = 
-                  if_else(value > 0.1, paste0((round(value, 2)*100),"%"), "")),
-            hjust = -0.2, size = 3) +
-  scale_y_continuous(labels = percent) +
-  scale_fill_manual(values = c("#884EA0", "#5DADE2", "#52BE80", "#2471A3", "#196F3D")) +
-  facet_grid(cols = vars(name)) +
-  labs(x = NULL,
-       y = "Porcentaje (%)") +
-  coord_flip() +
-  theme_linedraw() +
-  theme(legend.position = "none",
-        panel.spacing = unit(1.3, "lines"))
+# filtrando partidos con cierta presencia electa en Diputadas
+gg_resumen_filtrado <- gg_resumen %>%
+  group_by(partido) %>%
+  filter(any(etapa == "Diputadas Electas" & valor > 0.10)) %>% # umbral 10% sólo para mostrar
+  ungroup()
 
+# 2) Paleta por etapa: militantes (morado), dip (azules), sen (verdes)
+paleta_etapas <- c(
+  "Militantes mujeres"   = "#884EA0",
+  "Candidatas Diputadas" = "#5DADE2",
+  "Diputadas Electas"    = "#52BE80",
+  "Candidatas Senadoras" = "#2471A3",
+  "Senadoras Electas"    = "#196F3D"
+)
+
+# 3) Gráfico
+p_embudo_facetas <- ggplot(gg_resumen_filtrado %>% filter(!is.na(valor)),
+                           aes(x = fct_reorder(partido, valor), y = valor, fill = etapa)) +
+  geom_col(width = 0.7, alpha = 0.9) +
+  geom_text(aes(label = if_else(valor > 0.001, percent(valor, 0.1), "")),
+            hjust = -0.1, size = 3.2, fontface = "bold", color = "#2C3E50") +
+  coord_flip(clip = "off") +
+  scale_y_continuous(labels = percent, limits = c(0, 1), expand = expansion(mult = c(0, 0.05))) +
+  scale_fill_manual(values = paleta_etapas) +
+  facet_grid(cols = vars(etapa)) +
+  labs(
+    title = "Embudo de Participación y Representación de Mujeres por Partido",
+    subtitle = "De militantes a candidatas y electas (Diputadas/Senadoras)",
+    x = NULL,
+    y = "Proporción (%)"
+  ) +
+  theme_linedraw(base_size = 11) +
+  theme(
+    legend.position = "none",
+    panel.spacing = unit(1.2, "lines"),
+    plot.title = element_text(face = "bold", size = 14),
+    axis.text.y = element_text(size = 8),
+    plot.margin = margin(10, 30, 10, 10)
+  )
+
+print(p_embudo_facetas)
 ```
 
+
+Embudo de Participación Femenina por Cámara:
+
+```{r}
+# 1) Preparamos estructura secuencial por cámara
+# Para cada partido armamos dos filas (una por cámara) con etapas ordenadas
+embudo_datos <- resumen_genero %>%
+  select(partido, prop_militantes_mujeres, prop_candidatas_dip, prop_electas_dip,
+         prop_candidatas_sen, prop_electas_sen) %>%
+  pivot_longer(
+    cols = -partido,
+    names_to = "etapa",
+    values_to = "valor"
+  ) %>%
+  mutate(
+    camara = case_when(
+      etapa %in% c("prop_candidatas_dip", "prop_electas_dip") ~ "Diputadas",
+      etapa %in% c("prop_candidatas_sen", "prop_electas_sen") ~ "Senadoras",
+      TRUE ~ "Ambas"  # militantes aplica a ambas
+    ),
+    etapa_orden = case_when(
+      etapa == "prop_militantes_mujeres" ~ 1,
+      etapa %in% c("prop_candidatas_dip", "prop_candidatas_sen") ~ 2,
+      etapa %in% c("prop_electas_dip", "prop_electas_sen") ~ 3,
+      TRUE ~ 4
+    ),
+    etapa_label = case_when(
+      etapa_orden == 1 ~ "Militantes",
+      etapa_orden == 2 & camara == "Diputadas" ~ "Candidatas Dip",
+      etapa_orden == 2 & camara == "Senadoras" ~ "Candidatas Sen",
+      etapa_orden == 3 & camara == "Diputadas" ~ "Electas Dip",
+      etapa_orden == 3 & camara == "Senadoras" ~ "Electas Sen",
+      TRUE ~ etapa
+    )
+  ) %>%
+  # Duplicamos militantes para ambas cámaras para tener embudo por cámara completo
+  group_by(partido) %>%
+  complete(camara = c("Diputadas", "Senadoras"), nesting(etapa_orden), fill = list(valor = NA_real_)) %>%
+  ungroup() %>%
+  # Volvemos a calcular correctamente militantes en ambas
+  group_by(partido) %>%
+  mutate(valor = if_else(etapa_orden == 1 & is.na(valor), first(na.omit(valor)), valor)) %>%
+  ungroup() %>%
+  filter(camara %in% c("Diputadas", "Senadoras"), etapa_orden %in% 1:3) %>%
+  arrange(camara, partido, etapa_orden)
+
+# 2) Paleta por cámara
+paleta_camara <- c("Diputadas" = "#5DADE2", "Senadoras" = "#196F3D")
+
+# 3) Gráfico embudo: línea + puntos + área suave
+p_embudo_line <- ggplot(embudo_datos %>% filter(!is.na(valor)),
+                        aes(x = etapa_orden, y = valor, group = partido, color = camara)) +
+  geom_line(alpha = 0.35) +
+  geom_point(size = 2) +
+  # Área agrupada por partido para sensación de embudo
+  # geom_area(aes(fill = camara), position = "identity", alpha = 0.06) +
+  scale_x_continuous(
+    breaks = c(1, 2, 3),
+    labels = c("Militantes", "Candidatas", "Electas")
+  ) +
+  scale_y_continuous(labels = percent, limits = c(0, 1)) +
+  scale_color_manual(values = paleta_camara) +
+  facet_wrap(~ camara, nrow = 1) +
+  labs(
+    title = "Embudo de Participación Femenina por Cámara",
+    subtitle = "Secuencia: Militantes → Candidatas → Electas",
+    x = "Etapa",
+    y = "Proporción (%)",
+    color = "Cámara"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    panel.grid.minor = element_blank()
+  )
+
+print(p_embudo_line)
+``` 
+
+
+Embudo Promedio de Participación Femenina:
+
+```{r}
+# 1) Promedios por etapa y cámara
+promedios <- resumen_genero %>%
+  summarise(
+    militantes = mean(prop_militantes_mujeres, na.rm = TRUE),
+    candidatas_dip = mean(prop_candidatas_dip, na.rm = TRUE),
+    electas_dip = mean(prop_electas_dip, na.rm = TRUE),
+    candidatas_sen = mean(prop_candidatas_sen, na.rm = TRUE),
+    electas_sen = mean(prop_electas_sen, na.rm = TRUE)
+  ) %>%
+  pivot_longer(everything(), names_to = "etapa", values_to = "valor") %>%
+  mutate(
+    camara = case_when(
+      etapa %in% c("candidatas_dip", "electas_dip") ~ "Diputadas",
+      etapa %in% c("candidatas_sen", "electas_sen") ~ "Senadoras",
+      TRUE ~ "Ambas"
+    ),
+    etapa_orden = case_when(
+      etapa == "militantes" ~ 1,
+      etapa %in% c("candidatas_dip", "candidatas_sen") ~ 2,
+      etapa %in% c("electas_dip", "electas_sen") ~ 3
+    ),
+    etapa_label = case_when(
+      etapa == "militantes" ~ "Militantes",
+      etapa == "candidatas_dip" ~ "Candidatas Dip",
+      etapa == "electas_dip" ~ "Electas Dip",
+      etapa == "candidatas_sen" ~ "Candidatas Sen",
+      etapa == "electas_sen" ~ "Electas Sen"
+    )
+  )
+
+# 2) Conversiones (de militantes -> candidatas; candidatas -> electas) por cámara
+conv <- promedios %>%
+  group_by(camara) %>%
+  reframe(
+    conv_mil_a_cand = if_else(camara == "Diputadas",
+                              first(valor[etapa_label == "Candidatas Dip"]) / first(valor[etapa_label == "Militantes"]),
+                              first(valor[etapa_label == "Candidatas Sen"]) / first(valor[etapa_label == "Militantes"])),
+    conv_cand_a_elec = if_else(camara == "Diputadas",
+                               first(valor[etapa_label == "Electas Dip"]) / first(valor[etapa_label == "Candidatas Dip"]),
+                               first(valor[etapa_label == "Electas Sen"]) / first(valor[etapa_label == "Candidatas Sen"]))
+  )
+
+print(conv)
+
+# 3) Gráfico embudo promedio
+paleta_camara <- c("Diputadas" = "#5DADE2", "Senadoras" = "#196F3D")
+
+p_embudo_prom <- ggplot(promedios %>% filter(camara != "Ambas"),
+                        aes(x = etapa_orden, y = valor, group = camara, color = camara)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  geom_text(aes(label = percent(valor, 0.1)), vjust = -1.0, size = 3.4, fontface = "bold") +
+  scale_x_continuous(
+    breaks = c(1, 2, 3),
+    labels = c("Militantes", "Candidatas", "Electas")
+  ) +
+  scale_y_continuous(labels = percent, limits = c(0, 1)) +
+  scale_color_manual(values = paleta_camara) +
+  labs(
+    title = "Embudo Promedio de Participación Femenina",
+    subtitle = paste0(
+      "Conversiones: Diputadas (Mil→Cand: ", percent(conv$conv_mil_a_cand[conv$camara == "Diputadas"], 0.1),
+      ", Cand→Elect: ", percent(conv$conv_cand_a_elec[conv$camara == "Diputadas"], 0.1), "); ",
+      "Senadoras (Mil→Cand: ", percent(conv$conv_mil_a_cand[conv$camara == "Senadoras"], 0.1),
+      ", Cand→Elect: ", percent(conv$conv_cand_a_elec[conv$camara == "Senadoras"], 0.1), ")"
+    ),
+    x = "Etapa",
+    y = "Proporción (%)",
+    color = "Cámara"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    panel.grid.minor = element_blank()
+  )
+
+print(p_embudo_prom)
+```
 
