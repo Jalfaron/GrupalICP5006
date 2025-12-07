@@ -181,35 +181,29 @@ En promedio, solo el 47.6% de las candidaturas son femeninas, y la conversión a
 ¿Qué barreras persisten para la representación femenina?
 
 ## a. El Fenómeno del "Embudo" (La Base es Femenina, la Cúpula es Masculina)
-Según el gráfico de Militantes, la participación femenina es altísima. En casi todos los partidos (salvo Republicanos y Evópoli), las mujeres son más del 50% de la base (se puede ver en el de Ecologista Verde o el PRO).
-En cuanto a Candidatas la proporción baja un poco, pero se mantiene fuerte (cercana al 40-50%) debido a la Ley de Cuotas.
-En las candidatas electas está el problema. En los gráficos de Electas (especialmente Diputadas), las barras se desploman para los partidos tradicionales.
+Como se observa en el gráfico de militantes, la participación femenina es altísima: en la mayoría de los partidos supera el 50%. Sin embargo, en el paso a candidaturas y, sobre todo, a electas, las proporciones caen drásticamente.
+Ejemplo: En Diputadas, partidos como UDI y RN bajan de más del 50% de militantes a menos del 20% de electas. 
 
-Las mujeres son la fuerza base de los partidos, pero a medida que se sube en la jerarquía de poder (de militante -> candidata -> electa), los hombres ocupan más espacio.
+**Las mujeres son la fuerza base de los partidos, pero a medida que se sube en la jerarquía de poder (de militante -> candidata -> electa), los hombres ocupan más espacio.**
 
 ## b. La Ley de Cuotas funciona en el "Papel" pero no en el "Resultado"
-Al mirar los gráficos de Candidatas (Senadoras y Diputadas), ves que casi ningún partido baja del 40%. Esto es porque la ley los obliga a llevar al menos un 40% de candidatas. Sin embargo, al mirar los gráficos de Electas, muchos partidos caen drásticamente (mira la UDI o RN en diputadas, que bajan al ~20-25%).
-
-Los partidos cumplen con llevar mujeres, pero probablemente las ponen en distritos donde saben que van a perder, o les dan menos financiamiento/visibilidad que a los hombres. Cumplen la cuota, pero no aseguran la elegibilidad.
+Los gráficos de candidaturas muestran que casi ningún partido baja del 40%, cumpliendo la ley de cuotas. Pero en electas, muchas caen a cero o porcentajes mínimos (como UDI o RN).
+Podemos decir que los partidos cumplen la cuota, pero podrían ubicar mujeres en distritos menos competitivos o darles menos recursos, lo que limita su elegibilidad.
 
 ## c. La Brecha Ideológica (Izquierda vs. Derecha)
-Existe una diferencia visible en la efectividad de elección entre bloques políticos en la Cámara de Diputados:
-
-Partidos de Izquierda/Centro-Izquierda: (PC, Comunes, Convergencia Social, RD) tienden a tener una consistencia mayor entre candidatas y electas. De hecho, el PC y Comunes tienen porcentajes de diputadas electas muy altos (sobre el 60%), superando incluso su base de militantes.
-
-Partidos de Derecha: (UDI, RN, Republicanos, Evópoli) aunque tienen una base de militantes y candidatas aceptable, su porcentaje de mujeres electas como diputadas es notoriamente más bajo (rondando el 15-25%).
+Existe una diferencia visible en la efectividad de elección entre bloques políticos en la Cámara de Diputados. En la Cámara de Diputados, partidos de izquierda (PC, Comunes, RD) muestran mayor coherencia entre candidatas y electas, llegando incluso a superar el 60% en electas. En cambio, partidos de derecha (UDI, RN, Republicanos) presentan porcentajes muy bajos (15%-25%), lo que evidencia diferencias ideológicas en la efectividad de la paridad.
 
 ## d. El Senado es una barrera más difícil (Muchos ceros)
-El gráfico de Senadoras Electas muestra muchas barras vacías o muy bajas (Evópoli, PPD, Radicales, DC, Comunes, RD aparecen con 0% o muy bajo). 
-A diferencia de la Cámara de Diputados, el Senado renueva menos cupos y las campañas son más caras y difíciles. Esto confirma que los espacios de "alto poder" siguen siendo más difíciles de acceder para las mujeres en comparación con la Cámara de Diputados.
+El gráfico de Senadoras Electas muestra muchas barras vacías o muy bajas (Evópoli, PPD, Radicales, DC, Comunes, RD aparecen con 0% o muy bajo), la mayoría de los partidos no elige ninguna mujer. Solo cuatro partidos alcanzan entre 40%-50%. El hecho de que existan menos cupos, campañas más costosas y mayor concentración de poder hacen que la paridad sea menos efectiva en el Senado. Esto confirma que los espacios de "alto poder" siguen siendo más difíciles de acceder para las mujeres en comparación con la Cámara de Diputados.
 
-**En general, Nuestros datos demuestran que no hay falta de interés político de las mujeres (son la mayoría en la militancia), sino que existen barreras estructurales dentro de los partidos que impiden que esa gran base militante se transforme en autoridades electas, especialmente en los partidos de derecha y en la elección senatorial.**
+**En general, Nuestros datos demuestran que no hay falta de interés político de las mujeres (son la mayoría en la militancia), sino que existen barreras estructurales dentro de los partidos que impiden que esa gran base militante se transforme en autoridades electas, especialmente en los partidos de derecha y en la elección senatorial. Esto plantea la necesidad de revisar mecanismos de paridad más allá de las candidaturas.**
 
 --- 
 
 ## 7. Proyecciones
-Comparar con elecciones de 2017 y proyectar hacia 2025.
+Comparar con elecciones de 2017 y proyectar hacia 2025. 
 Incluir variables como edad, región o trayectoria política.
 
 ---
 _Este proyecto es realizado en el marco del curso ICP5006 "Medición y análisis dimensional de datos políticos"._
+_Declaración de uso de IA: Se utilizó Gemini y Copilot para revisar errores, ordenar códigos y propuestas para creación de gráficos_
