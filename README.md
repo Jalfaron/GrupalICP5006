@@ -100,31 +100,31 @@ Dashboards interactivos.
 
 ---
 
-## 6. Conclusiones y Recomendaciones
+## 6. Conclusiones
 ¿Qué partidos tienen mayor coherencia entre militancia y candidaturas?
 ¿La cuota de género está logrando su objetivo?
 ¿Qué barreras persisten para la representación femenina?
 
-# 1. El Fenómeno del "Embudo" (La Base es Femenina, la Cúpula es Masculina)
+# a. El Fenómeno del "Embudo" (La Base es Femenina, la Cúpula es Masculina)
 Según el gráfico de Militantes, la participación femenina es altísima. En casi todos los partidos (salvo Republicanos y Evópoli), las mujeres son más del 50% de la base (se puede ver en el de Ecologista Verde o el PRO).
 En cuanto a Candidatas la proporción baja un poco, pero se mantiene fuerte (cercana al 40-50%) debido a la Ley de Cuotas.
 En las candidatas electas está el problema. En los gráficos de Electas (especialmente Diputadas), las barras se desploman para los partidos tradicionales.
 
 Las mujeres son la fuerza base de los partidos, pero a medida que se sube en la jerarquía de poder (de militante -> candidata -> electa), los hombres ocupan más espacio.
 
-# 2. La Ley de Cuotas funciona en el "Papel" pero no en el "Resultado"
+# b. La Ley de Cuotas funciona en el "Papel" pero no en el "Resultado"
 Al mirar los gráficos de Candidatas (Senadoras y Diputadas), ves que casi ningún partido baja del 40%. Esto es porque la ley los obliga a llevar al menos un 40% de candidatas. Sin embargo, al mirar los gráficos de Electas, muchos partidos caen drásticamente (mira la UDI o RN en diputadas, que bajan al ~20-25%).
 
 Los partidos cumplen con llevar mujeres, pero probablemente las ponen en distritos donde saben que van a perder, o les dan menos financiamiento/visibilidad que a los hombres. Cumplen la cuota, pero no aseguran la elegibilidad.
 
-# 3. La Brecha Ideológica (Izquierda vs. Derecha)
+# c. La Brecha Ideológica (Izquierda vs. Derecha)
 Existe una diferencia visible en la efectividad de elección entre bloques políticos en la Cámara de Diputados:
 
 Partidos de Izquierda/Centro-Izquierda: (PC, Comunes, Convergencia Social, RD) tienden a tener una consistencia mayor entre candidatas y electas. De hecho, el PC y Comunes tienen porcentajes de diputadas electas muy altos (sobre el 60%), superando incluso su base de militantes.
 
 Partidos de Derecha: (UDI, RN, Republicanos, Evópoli) aunque tienen una base de militantes y candidatas aceptable, su porcentaje de mujeres electas como diputadas es notoriamente más bajo (rondando el 15-25%).
 
-# 4. El Senado es una barrera más difícil (Muchos ceros)
+# d. El Senado es una barrera más difícil (Muchos ceros)
 El gráfico de Senadoras Electas muestra muchas barras vacías o muy bajas (Evópoli, PPD, Radicales, DC, Comunes, RD aparecen con 0% o muy bajo). 
 A diferencia de la Cámara de Diputados, el Senado renueva menos cupos y las campañas son más caras y difíciles. Esto confirma que los espacios de "alto poder" siguen siendo más difíciles de acceder para las mujeres en comparación con la Cámara de Diputados.
 
